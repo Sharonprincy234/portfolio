@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICIAIDS’26 – Premium Conference Webpage</title>
+
+<!-- FONT & ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ------------------------------------------------
+   ROOT COLORS
+------------------------------------------------ */
+:root {
+    --gold: #d4af37;
+    --gold-soft: #ffdf85;
+    --black: #000000;
+    --dark: #0a0a0a;
+    --white: #ffffff;
+}
+
+/* ------------------------------------------------
+   GLOBAL STYLES
+------------------------------------------------ */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------
+   FULL NEBULA ANIMATED BACKGROUND
+------------------------------------------------ */
+#nebulaCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; 
+    height: 100vh;
+    z-index: -1;
+    background: transparent;
+}
+
+/* ------------------------------------------------
+   NAVIGATION BAR
+------------------------------------------------ */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    border-bottom: 2px solid var(--gold);
+    z-index: 999;
+    backdrop-filter: blur(5px);
+}
+
+nav h1 {
+    color: var(--gold);
+    font-size: 28px;
+    margin: 0;
+    animation: glowTitle 3s infinite alternate;
+}
+
+@keyframes glowTitle {
+    from { text-shadow: 0 0 10px var(--gold); }
+    to { text-shadow: 0 0 20px var(--gold-soft); }
+}
+
+nav a {
+    color: white;
+    margin-left: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: var(--gold);
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* MODE SWITCH BUTTON */
+.mode-btn {
+    margin-left: 20px;
+    background: var(--gold);
+    color: black;
+    padding: 6px 14px;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.mode-btn:hover {
+    background: var(--gold-soft);
+}
+
+/* ------------------------------------------------
+   SECTION STYLING (FULL SLIDES)
+------------------------------------------------ */
+.section {
+    height: 100vh;
+    padding: 140px 80px;
+    box-sizing: border-box;
+    position: relative;
+    animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section h1, .section h2 {
+    color: var(--gold);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0%   { text-shadow: 0 0 10px var(--gold); }
+    50%  { text-shadow: 0 0 20px var(--gold-soft); }
+    100% { text-shadow: 0 0 10px var(--gold); }
+}
+
+.section p {
+    font-size: 20px;
+    width: 75%;
+    line-height: 1.6;
+}
+
+/* ------------------------------------------------
+   BUTTONS
+------------------------------------------------ */
+.btn {
+    background: var(--gold);
+    color: black;
+    padding: 12px 22px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--gold-soft);
+    box-shadow: 0 0 20px var(--gold);
+}
+
+/* ------------------------------------------------
+   CONTACT BOX
+------------------------------------------------ */
+.contact-box {
+    background: rgba(255,255,255,0.05);
+    padding: 35px;
+    width: 50%;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* ------------------------------------------------
+   VIEW MODES
+------------------------------------------------ */
+.longpage .section {
+    height: auto;
+    padding: 160px 80px;
+}
+
+.carousel {
+    display: none;
+    overflow-x: scroll;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel .section {
+    display: inline-block;
+    width: 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+}
+
+/* ------------------------------------------------
+   FOOTER
+------------------------------------------------ */
+footer {
+    background: black;
+    padding: 30px;
+    text-align: center;
+    border-top: 2px solid var(--gold);
+}
+
+</style>
+</head>
+<body>
+
+<!-- NEBULA CANVAS -->
+<canvas id="nebulaCanvas"></canvas>
+
+<!-- NAVIGATION -->
+<nav>
+    <h1>ICIAIDS’26</h1>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#about-college">College</a>
+        <a href="#about-conference">Conference</a>
+        <a href="#department">Department</a>
+        <a href="#contact">Contact</a>
+
+        <button class="mode-btn" onclick="toggleMode()">Switch Mode</button>
+    </div>
+</nav>
+
+<!-- CONTENT CONTAINER -->
+<div id="main-container">
+
+    <!-- DEFAULT MODE: FULL-SCREEN SLIDES -->
+    <div id="vertical-mode">
+
+        <!-- SLIDE 1 -->
+        <section class="section" id="home">
+            <h1>First International Conference</h1>
+            <h2>ICIAIDS’26</h2>
+            <p>An international arena for Innovation in Artificial Intelligence & Data Science.<br><br><b>27th February 2026</b></p>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="section" id="about-college">
+            <h1>About the College</h1>
+            <p>New Prince Shri Bhavani College of Engineering and Technology is a vibrant institution ...</p>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="section" id="about-conference">
+            <h1>About the Conference</h1>
+            <p>ICIAIDS’26 brings together global leaders to explore breakthroughs ...</p>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="section" id="department">
+            <h1>About the Department</h1>
+            <p>The Department of Artificial Intelligence & Data Science was established in 2023 ...</p>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="section" id="contact">
+            <h1>Contact Us</h1>
+
+            <div class="contact-box">
+                <p><b>Email:</b> iciaids@npsbcet.edu.in</p>
+                <p><b>Phone:</b> +91 —</p>
+                <br>
+
+                <form onsubmit="submitForm(event)">
+                    <input type="text" placeholder="Your Name" required style="width:100%;padding:10px;"><br><br>
+                    <input type="email" placeholder="Your Email" required style="width:100%;padding:10px;"><br><br>
+                    <textarea placeholder="Message" rows="5" style="width:100%;padding:10px;"></textarea><br><br>
+                    <button class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            © 2026 ICIAIDS – New Prince Shri Bhavani College of Engineering & Technology
+        </footer>
+    </div>
+</div>
+
+<script>
+
+/* ------------------------------------------------
+   MODE SWITCHING (3 MODES)
+------------------------------------------------ */
+let mode = 1;
+
+function toggleMode() {
+    mode++;
+    if (mode > 3) mode = 1;
+
+    const main = document.getElementById("main-container");
+
+    if (mode === 1) {
+        main.className = "";
+        alert("Mode: Fullscreen Slides");
+    }
+    if (mode === 2) {
+        main.className = "longpage";
+        alert("Mode: Smooth Scrolling");
+    }
+    if (mode === 3) {
+        main.className = "carousel";
+        alert("Mode: Carousel Mode");
+    }
+}
+
+/* ------------------------------------------------
+   CONTACT FORM
+------------------------------------------------ */
+function submitForm(event) {
+    event.preventDefault();
+    alert("Thank you! Your message has been sent.");
+}
+
+/* ------------------------------------------------
+   GOLD NEBULA BACKGROUND ANIMATION
+------------------------------------------------ */
+const canvas = document.getElementById("nebulaCanvas");
+const ctx = canvas.getContext("2d");
+
+let w, h, particles;
+
+function resize() {
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+}
+window.onresize = resize;
+resize();
+
+function initParticles() {
+    particles = [];
+    for (let i = 0; i < 160; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 2,
+            vx: (Math.random() - 0.5) * 0.7,
+            vy: (Math.random() - 0.5) * 0.7,
+            glow: Math.random() * 20
+        });
+    }
+}
+
+function animateNebula() {
+    ctx.clearRect(0, 0, w, h);
+
+    // golden nebula glow
+    const gradient = ctx.createRadialGradient(
+        w/2, h/2, 0, 
+        w/2, h/2, w/1.2
+    );
+    gradient.addColorStop(0, "rgba(255,215,0,0.15)");
+    gradient.addColorStop(1, "transparent");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, w, h);
+
+    // particles
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,215,0,${0.6})`;
+        ctx.shadowBlur = p.glow;
+        ctx.shadowColor = "gold";
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+    });
+
+    requestAnimationFrame(animateNebula);
+}
+
+initParticles();
+animateNebula();
+
+</script>
+
+</body>
+</html>
